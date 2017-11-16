@@ -9,8 +9,14 @@ class Gift(models.Model):
     price_cents = models.IntegerField()
     sku = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+
 
 class Wishlist(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateField()
     gifts = models.ManyToManyField(Gift)
+
+    def __str__(self):
+        return self.title
