@@ -6,7 +6,7 @@ from django.db import models
 # Create your models here.
 class Gift(models.Model):
     name = models.CharField(max_length=30)
-    price_in_cents = models.IntegerField()
+    price_cents = models.IntegerField()
     sku = models.IntegerField()
 
 
