@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class Gift(models.Model):
@@ -15,7 +14,3 @@ class Wishlist(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateField()
     gifts = models.ManyToManyField(Gift)
-
-class User(AbstractUser):
-    dob = models.DateField(null=True)
-    friends = models.ManyToManyField("self")

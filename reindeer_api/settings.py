@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_seed',
     'gifts',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -125,4 +126,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'gifts.User'
+AUTH_USER_MODEL = 'users.User'
