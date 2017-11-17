@@ -1,0 +1,1 @@
+web: gunicorn reindeer_api.wsgi --log-file -
