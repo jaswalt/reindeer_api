@@ -10,9 +10,19 @@ from users.models import User
 class TestGiftModel(TestCase)
 
 def setUp(self):
-    self.gift = Gift.objects.create(
-        name='Bob Dob',
-        price_cents='7024',
+
+    self.user = User.objects.create(
+        username = 'johndoe', 
+        password = 'testing',
+        first_name = 'John', 
+        last_name = 'Doe',
+        email = 'test@testing.com',
+        dob = '1999-09-09',
+    )
+
+    self.gift = self.user.gift_set.create(
+        name = 'Book Book',
+        price_cents = '7024',
     )
 
 def test_string_representation(self):
