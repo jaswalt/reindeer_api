@@ -22,6 +22,5 @@ def test_gift(self):
     self.assertIsInstance(self.gift, gift)
 
 def test_gift_name_length(self):
-    form_data = {'name': 'Bob Dob'}
-    gift_form = GiftForm(data = form_data)
+    gift_form = GiftForm({'name': 'Bob Dob'})
     self.assertFalse(gift_form.is_valid())
