@@ -16,7 +16,6 @@ class GiftsView(View):
         gifts = serializers.serialize('json', gifts)
         return JsonResponse(gifts, safe=False)
 
-    @csrf_exempt
     def post(self, request, user_id):
         print(request.POST)
         return HttpResponse()
