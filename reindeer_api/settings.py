@@ -25,7 +25,7 @@ SECRET_KEY = 'a6!=$ks5!ul=54!)pe$-nnj!(46u0ud^k+6k(!r#5gj!_!$wm6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['reindeer-api.herokuapp.com', 'localhost', '0.0.0.0', '127.0.0.1']
 
 
 # Application definition
