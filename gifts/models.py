@@ -27,9 +27,9 @@ class Wishlist(models.Model):
 class GiftForm(ModelForm):
     class Meta:
         model = Gift
-        fields = ['name', 'price_cents', 'sku', 'user']
+        fields = ['name', 'price_cents', 'sku']
 
 class WishlistForm(ModelForm):
     class Meta:
         model = Wishlist
-        fields = ['title', 'date', 'gifts', 'user']
+        fields = ['title', 'date', 'gifts']
