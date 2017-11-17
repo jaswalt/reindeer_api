@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.test import TestCase
 
 from .models import Gift
-from .models import 
+from users.models import User
 
 # Create your tests here.
 class TestGiftModel(TestCase)
