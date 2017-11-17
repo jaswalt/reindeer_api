@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
+from django.forms import ModelForm
 
 # Create your models here.
 class Gift(models.Model):
@@ -22,3 +23,13 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return self.title
+
+class GiftForm(ModelForm):
+    class Meta:
+        model = Gift
+        fields = ['name', 'price_cents', 'sku', 'user']
+
+class WishlistForm(ModelForm):
+    class Meta:
+        model = Wishlist
+        fields = ['title', 'date', 'gifts', 'user']
