@@ -1,1 +1,1 @@
-web: python manage.py runserver
+web: gunicorn reindeer_api.wsgi --log-file -
