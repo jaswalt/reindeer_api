@@ -3,6 +3,7 @@ astroid==1.5.3
 cffi==1.11.2
 Django==1.11.7
 django-seed==0.1.7
+django-storages==1.6.5
 factory-boy==2.9.2
 Faker==0.8.7
 gunicorn==19.7.1
