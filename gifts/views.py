@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import json
+
 from django.views import View
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
@@ -17,5 +19,5 @@ class GiftsView(View):
         return JsonResponse(gifts, safe=False)
 
     def post(self, request, user_id):
-        print(request.POST)
+        print(json.loads(request.body))
         return HttpResponse()
