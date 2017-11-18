@@ -5,8 +5,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 # Create your views here.
-def index(request):
+def index(_request):
+    """GET /api/vX/users/"""
     return HttpResponse("Hello, world. You're at the users index.")
 
-def show(request, id):
-    return HttpResponse(f"Hello, {id}")
+def show(_request, user_id):
+    """GET api/vX/users/X"""
+    return HttpResponse(f"Hello, {user_id}")
