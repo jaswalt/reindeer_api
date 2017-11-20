@@ -1,3 +1,0 @@
-entrypoint: gunicorn reindeer_api.wsgi --log-file -
-env: flex
-runtime: python
