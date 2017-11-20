@@ -9,6 +9,8 @@ class Gift(models.Model):
     name = models.CharField(max_length=30)
     price_cents = models.IntegerField()
     sku = models.IntegerField()
+    description = models.TextField()
+    photo = models.ImageField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
