@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import json
 from django.views import View
+from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from users.models import User
@@ -21,3 +22,9 @@ class GiftsView(View):
         """Method for POST /api/vX/users/X/gifts/"""
         print(json.loads(request.body))
         return HttpResponse()
+
+
+def index(request):
+    """GET /"""
+    # TODO: Change to actual index page when ready
+    return render(request, 'soon.html')

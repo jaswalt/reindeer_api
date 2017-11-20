@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from gifts.views import index as giftsIndex
 
 urlpatterns = [
+    url(r'^$', giftsIndex),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include([
         url(r'^v1/', include([
