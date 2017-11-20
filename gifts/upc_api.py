@@ -3,6 +3,7 @@ import httplib2 as http
 import json
 
 class ProductInfo:
+
     
     @classmethod
     def fetch_product_info(cls):
@@ -20,19 +21,19 @@ class ProductInfo:
         data = json.loads(content)
         
         if resp.status == 200:
-            return data
-        else:
-            return None
+            cls.data = data
 
+        
     @classmethod
-    def display_product_info(cls, data):
-        if data is None:
-            return data
+    def display_product_info(cls):
+        data = cls.data
 
         first_item = data.get('items')[0]
         name = first_item.get('title')
         sku = first_item.get('ean')
+        description = first_item.get('description')
+        image = first_item.get('images')[0]
         first_offer = first_item.get('offers')[0]
         price = first_offer.get('price')
-        
-        return name, sku, price
+
+        return name, sku, price, description, image
