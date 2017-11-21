@@ -12,7 +12,7 @@ from users.models import User
 class GiftsView(View):
     """View to handle requests to /api/vX/users/X/gifts/"""
 
-    def get(self, _request, user_id):
+    def get(self, _request, user_id, _gift_id):
         """Method for GET /api/vX/users/X/gifts/"""
         gifts = User.objects.get(pk=user_id).gift_set.all()
         gifts = serializers.serialize('json', gifts)
@@ -21,6 +21,11 @@ class GiftsView(View):
     def post(self, request, _user_id):
         """Method for POST /api/vX/users/X/gifts/"""
         print(json.loads(request.body))
+        return HttpResponse()
+
+    def delete(self, _request, user_id, gift_id):
+        """Method for DELETE /api/vX/users/X/gifts/X"""
+        User.objects.get(pk=user_id).gift_set.get(pk=gift_id).delete()
         return HttpResponse()
 
 
