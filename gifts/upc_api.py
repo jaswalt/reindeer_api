@@ -1,5 +1,6 @@
 from urllib.parse import urlparse
 import json
+import os
 import httplib2 as http
 from django.utils.html import strip_tags
 import html.parser
@@ -36,9 +37,8 @@ class ProductInfo:
             else:
                 #search another api
                 walmart_upc = '035000521019'
-                api_key = '4n29ferqah8jjbatzb7v2vgw'
                 resp, content = ch.request(
-                    f'http://api.walmartlabs.com/v1/items?apiKey={api_key}&upc={walmart_upc}',
+                    f'http://api.walmartlabs.com/v1/items?apiKey={os.environ.get('WALMART_API_KEY')}&upc={walmart_upc}',
                     'GET',
                     None,
                     headers
