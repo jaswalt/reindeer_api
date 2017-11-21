@@ -31,7 +31,3 @@ class TestGiftModel(TestCase):
 
     def test_gift(self):
         self.assertIsInstance(self.gift, Gift)
-
-    def test_gift_name_length(self):
-        gift_form = GiftForm({'name': 'Bob Dob'})
-        self.assertFalse(gift_form.is_valid())
