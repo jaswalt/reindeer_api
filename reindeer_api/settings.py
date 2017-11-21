@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['kaddo.co', 'reindeer-api.herokuapp.com',
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -79,6 +81,11 @@ WSGI_APPLICATION = 'reindeer_api.wsgi.application'
 TEST_RUNNER = 'redgreenunittest.django.runner.RedGreenDiscoverRunner'
 
 AUTH_USER_MODEL = 'users.User'
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000',
+    'kaddo.co',
+)
 
 
 # Database
