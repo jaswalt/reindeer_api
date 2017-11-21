@@ -6,7 +6,7 @@ from django.forms import ModelForm
 
 # Create your models here.
 class Gift(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=255)
     price_cents = models.IntegerField()
     sku = models.IntegerField()
     description = models.TextField()
