@@ -15,14 +15,28 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from gifts.views import index as giftsIndex
+from gifts.views import GiftsView as giftsIndex
+from rest_framework.schemas import get_schema_view
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from rest_framework import views, serializers, status, response
+
+class MessageSerializer(serializers.Serializer):
+    message = serializers.CharField()
+
+class EchoView(views.APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = MessageSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED)
 
 urlpatterns = [
-    url(r'^$', giftsIndex),
-    url(r'^admin/', admin.site.urls),
-    url(r'^api/', include([
-        url(r'^v1/', include([
-            url(r'^users/', include('users.urls')),
-        ]))
-    ]))
+    url(r'^api/$', get_schema_view()),
+    url(r'^api/auth/', include(
+        'rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/auth/token/obtain/$', TokenObtainPairView.as_view()),
+    url(r'^api/auth/token/refresh/$', TokenRefreshView.as_view()),
 ]

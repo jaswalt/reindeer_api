@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_seed',
     'storages',
     'gifts',
+    'rest_framework',
     'users',
 ]
 
@@ -165,3 +166,15 @@ GS_BUCKET_NAME = 'reindeer-assets'
 # Heroku Production Database
 
 DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
+
+# Rest Framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
