@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['kaddo.co', 'reindeer-api.herokuapp.com',
 
 INSTALLED_APPS = [
     'corsheaders',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +44,6 @@ INSTALLED_APPS = [
     'django_seed',
     'storages',
     'gifts',
-    'rest_framework',
     'users',
 ]
 
@@ -171,10 +171,8 @@ DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
 }

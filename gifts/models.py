@@ -3,9 +3,12 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 from django.forms import ModelForm
+from rest_framework import serializers
+
 
 # Create your models here.
 class Gift(models.Model):
+    """GIFT MODEL"""
     name = models.CharField(max_length=255)
     price_cents = models.IntegerField()
     sku = models.IntegerField()
@@ -17,7 +20,20 @@ class Gift(models.Model):
         return self.name
 
 
+class GiftForm(ModelForm):
+    class Meta:
+        model = Gift
+        fields = ['name', 'price_cents', 'sku']
+
+
+class GiftSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gift
+        fields = ('id', 'name', 'price_cents', 'sku')
+
+
 class Wishlist(models.Model):
+    """WISHLIST MODEL"""
     title = models.CharField(max_length=255)
     date = models.DateField()
     gifts = models.ManyToManyField(Gift)
@@ -26,12 +42,14 @@ class Wishlist(models.Model):
     def __str__(self):
         return self.title
 
-class GiftForm(ModelForm):
-    class Meta:
-        model = Gift
-        fields = ['name', 'price_cents', 'sku']
 
 class WishlistForm(ModelForm):
     class Meta:
         model = Wishlist
         fields = ['title', 'date', 'gifts']
+
+
+class WishlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wishlist
+        fields = ('id', 'title', 'date', 'gifts')

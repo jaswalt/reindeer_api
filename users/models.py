@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.forms import ModelForm
+from rest_framework import serializers
+
 
 # Create your models here.
 class User(AbstractUser):
@@ -20,3 +22,17 @@ class UserForm(ModelForm):
             'email',
             'dob'
         ]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password',
+            'friends',
+        )

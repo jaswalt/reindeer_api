@@ -2,31 +2,32 @@
 from __future__ import unicode_literals
 
 import json
-from django.views import View
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse
-from django.core import serializers
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from users.models import User
+from .models import GiftSerializer
 
 # Create your views here.
-class GiftsView(View):
+class GiftsView(APIView):
     """View to handle requests to /api/vX/users/X/gifts/"""
 
-    def get(self, _request, user_id, _gift_id):
+    def get(self, request, user_id):
         """Method for GET /api/vX/users/X/gifts/"""
         gifts = User.objects.get(pk=user_id).gift_set.all()
-        gifts = serializers.serialize('json', gifts)
-        return JsonResponse(gifts, safe=False)
+        serialized_gifts = GiftSerializer(gifts, many=True)
+        return Response(serialized_gifts)
 
-    def post(self, request, _user_id):
+    def post(self, request):
         """Method for POST /api/vX/users/X/gifts/"""
         print(json.loads(request.body))
-        return HttpResponse()
+        return Response(status=status.HTTP_201_CREATED)
 
-    def delete(self, _request, user_id, gift_id):
+    def delete(self, request, user_id, gift_id):
         """Method for DELETE /api/vX/users/X/gifts/X"""
         User.objects.get(pk=user_id).gift_set.get(pk=gift_id).delete()
-        return HttpResponse()
+        return Response(status=status.HTTP_202_ACCEPTED)
 
 
 def index(request):

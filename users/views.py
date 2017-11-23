@@ -1,14 +1,43 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import os
-from django.shortcuts import render
-from django.http import HttpResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import User, UserSerializer
 
 # Create your views here.
-def index(_request):
-    """GET /api/vX/users/"""
-    return HttpResponse(f"Hello, world. You're at the users index. Var: {os.environ['TEST']}")
+class UsersView(APIView):
 
-def show(_request, user_id):
-    """GET api/vX/users/X"""
-    return HttpResponse(f"Hello, {user_id}")
+    def get(self, request):
+        users = UserSerializer(User.objects.all(), many=True)
+        return Response(users.data)
+
+    def post(self, request):
+        user = UserSerializer(data=request.data)
+        if user.is_valid():
+            user.save()
+            return Response(user.pk, status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+
+class UserView(APIView):
+
+    def get(self, request, user_id):
+        user = User.objects.get(pk=user_id)
+        serialized_user = UserSerializer(user)
+        return Response(serialized_user.data)
+
+    def put(self, request, user_id):
+        user = User.objects.get(pk=user_id)
+        updated_user = UserSerializer(user, data=request.data)
+        if updated_user.is_valid():
+            updated_user.save()
+            return Response(status=status.HTTP_202_ACCEPTED)
+
+    def delete(self, request, user_id):
+        count, aff = User.objects.get(pk=user_id).delete()
+        if count is 1:
+            return Response(status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
