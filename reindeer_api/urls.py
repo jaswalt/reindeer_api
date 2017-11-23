@@ -13,9 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+
 from django.conf.urls import include, url
 from django.contrib import admin
 from gifts import views as gifts
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView, TokenRefreshView, TokenVerifyView
+)
 
 
 urlpatterns = [
@@ -23,7 +27,11 @@ urlpatterns = [
     url(r'^api/v1/', include([
         url(r'^users/', include('users.urls')),
     ])),
-    url(r'^api-auth/', include(
-        'rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/token/', include([
+        url(r'^$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+        url(r'^refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
+        url(r'^verify/$', TokenVerifyView.as_view(), name='token_verify'),
+    ])),
+    url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
