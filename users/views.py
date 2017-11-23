@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import User, UserSerializer
+
 
 # Create your views here.
 class UsersView(APIView):
@@ -41,3 +43,13 @@ class UserView(APIView):
             return Response(status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
+
+
+@api_view(['POST'])
+def check_username(request):
+    query = User.objects.filter(username__iexact=request.data['username'])
+
+    if query.count() is 0:
+        return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
