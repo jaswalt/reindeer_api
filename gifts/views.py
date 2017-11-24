@@ -4,10 +4,11 @@ from __future__ import unicode_literals
 import json
 from django.shortcuts import render
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from users.models import User
-from .models import GiftSerializer
+from .models import GiftSerializer, Gift
 
 # Create your views here.
 class GiftsView(APIView):
@@ -34,3 +35,8 @@ def index(request):
     """GET /"""
     # TODO: Change to actual index page when ready
     return render(request, 'soon.html')
+
+@api_view(['GET'])
+def search(request, query):
+    Gift.objects.filter(name__icontains=query)
+    

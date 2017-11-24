@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^$', gifts.index),
     url(r'^api/v1/', include([
         url(r'^users/', include('users.urls')),
+        url(r'^gifts/', include('gifts.urls')),
     ])),
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-auth/', include('rest_framework.urls')),
