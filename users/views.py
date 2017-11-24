@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_jwt.settings import api_settings
 from .models import User, UserSerializer
 
 
@@ -18,7 +19,13 @@ class UsersView(APIView):
         user = UserSerializer(data=request.data)
         if user.is_valid():
             user.save()
-            return Response(user.data, status=status.HTTP_201_CREATED)
+
+            jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+            jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+            payload = jwt_payload_handler(user.instance)
+            token = jwt_encode_handler(payload)
+
+            return Response({'token': token}, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
