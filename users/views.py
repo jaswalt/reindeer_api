@@ -14,11 +14,11 @@ class UsersView(APIView):
         users = UserSerializer(User.objects.all(), many=True)
         return Response(users.data)
 
-    def post(self, request):
+    def put(self, request):
         user = UserSerializer(data=request.data)
         if user.is_valid():
             user.save()
-            return Response(user.pk, status=status.HTTP_201_CREATED)
+            return Response(user.data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 

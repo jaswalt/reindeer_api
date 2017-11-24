@@ -7,7 +7,7 @@ from rest_framework import serializers
 # Create your models here.
 class User(AbstractUser):
     dob = models.DateField(null=True)
-    friends = models.ManyToManyField("self")
+    friends = models.ManyToManyField("self", blank=True)
 
     def __str__(self):
         return self.first_name
@@ -36,3 +36,16 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
             'friends',
         )
+        extra_kwargs = {'password': { 'write_only': True }}
+    
+    def create(self, validated_data):
+        user = User(
+            username=validated_data['username'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            email=validated_data['email']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
