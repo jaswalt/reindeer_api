@@ -16,10 +16,10 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.contrib import admin
+from rest_framework_jwt.views import obtain_jwt_token
 from gifts import views as gifts
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView, TokenRefreshView, TokenVerifyView
-)
+
+
 
 
 urlpatterns = [
@@ -27,11 +27,7 @@ urlpatterns = [
     url(r'^api/v1/', include([
         url(r'^users/', include('users.urls')),
     ])),
-    url(r'^api/token/', include([
-        url(r'^$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-        url(r'^refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
-        url(r'^verify/$', TokenVerifyView.as_view(), name='token_verify'),
-    ])),
+    url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
