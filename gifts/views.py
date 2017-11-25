@@ -39,5 +39,5 @@ def index(request):
 
 @api_view(['GET'])
 def search(request, query):
-    gifts = ProductInfo.fetch_search_info()
+    gifts = ProductInfo.fetch_search_info(query)
     return Response(gifts)

@@ -69,11 +69,11 @@ class ProductInfo:
 
 
     @classmethod
-    def fetch_search_info(cls):
+    def fetch_search_info(cls, request):
         # hard code a product search for now
-        product = 'bycicle' #--returns 5 items--  #'books' #--code: not found-- 
+        #product = 'bycicle' #--returns 5 items--  #'books' #--code: not found-- 
         resp, content = cls.ch.request(
-            f'https://api.upcitemdb.com/prod/trial/search?s={product}',
+            f'https://api.upcitemdb.com/prod/trial/search?s={request}',
             'GET',
             None,
             cls.headers
@@ -111,9 +111,9 @@ class ProductInfo:
 
         else:
             #search walmart api
-            walmart_product = 'books'
+            #walmart_product = 'books'
             resp, content = cls.ch.request(
-                f"http://api.walmartlabs.com/v1/search?apiKey={os.environ.get('WALMART_API_KEY')}&query={walmart_product}",
+                f"http://api.walmartlabs.com/v1/search?apiKey={os.environ.get('WALMART_API_KEY')}&query={request}",
                 'GET',
                 None,
                 cls.headers
