@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from users.models import User
 from .models import GiftSerializer, Gift
+from .upc_api import ProductInfo
 
 # Create your views here.
 class GiftsView(APIView):
@@ -38,5 +39,5 @@ def index(request):
 
 @api_view(['GET'])
 def search(request, query):
-    Gift.objects.filter(name__icontains=query)
-    
+    gifts = ProductInfo.fetch_search_info()
+    return Response(gifts)
