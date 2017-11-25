@@ -29,7 +29,7 @@ class GiftForm(ModelForm):
 class GiftSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gift
-        fields = ('id', 'name', 'price_cents', 'sku')
+        fields = ('id', 'name', 'price_cents', 'sku', 'description', 'photo')
 
 
 class Wishlist(models.Model):
