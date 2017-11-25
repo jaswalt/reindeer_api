@@ -15,13 +15,13 @@ from .upc_api import ProductInfo
 class GiftsView(APIView):
     """View to handle requests to /api/vX/users/X/gifts/"""
 
-    def get(self, request, user_id):
+    def get(self, request, user_id, gift_id):
         """Method for GET /api/vX/users/X/gifts/"""
         gifts = User.objects.get(pk=user_id).gift_set.all()
         serialized_gifts = GiftSerializer(gifts, many=True)
-        return Response(serialized_gifts)
+        return Response(serialized_gifts.data)
 
-    def post(self, request):
+    def post(self, request, user_id, gift_id):
         """Method for POST /api/vX/users/X/gifts/"""
         print(json.loads(request.body))
         return Response(status=status.HTTP_201_CREATED)
