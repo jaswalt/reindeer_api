@@ -16,7 +16,7 @@ class ProductInfo:
     @classmethod
     def fetch_upc_info(cls):
         # hard code a upc for now
-        upc =  '062020005632'#--valid upc but no items-- #'4002293401102' #--valid upc with many items--
+        upc =  '062020005632'#--valid upc but no items-- #'4002293401102' #--valid upc with many items-- 
         resp, content = cls.ch.request(
             f'https://api.upcitemdb.com/prod/trial/lookup?upc={upc}', 
             'GET',
@@ -34,13 +34,18 @@ class ProductInfo:
                 
                 first_item = data.get('items')[0]
                 name = first_item.get('title')
-                sku = first_item.get('ean')
                 description = first_item.get('description')
                 image = first_item.get('images')[0]
                 first_offer = first_item.get('offers')[0]
                 price = first_offer.get('price')
 
-                return name, sku, price, description, image
+                results = {}
+                results['name'] = name
+                results['price'] = price
+                results['image'] = image
+                results['description'] = description
+                
+                return results
 
             else:
                 #search another api
@@ -54,18 +59,23 @@ class ProductInfo:
                 walmart_data = json.loads(content)
                 walmart_item = walmart_data.get('items')[0]
                 name = walmart_item.get('name')
-                sku = walmart_item.get('upc')
                 price = walmart_item.get('salePrice')
                 description_with_tags = walmart_item.get('shortDescription')
                 unescaped = html.parser.unescape(description_with_tags)
                 description = strip_tags(unescaped)
                 image = walmart_item.get('largeImage')
 
-                return name, sku, price, description, image              
+                results = {}
+                results['name'] = name
+                results['price'] = price
+                results['image'] = image
+                results['description'] = description
+
+                return results
 
         elif data['code'] == 'INVALID_UPC':
             # tell client to manually enter info
-            cls.data = {'code': 'sku not found'}
+            cls.data = {'code': 'INVALID_UPC'}
 
 
     @classmethod
