@@ -55,7 +55,7 @@ def postSearchGiftToGifts(request, user_id):
     print(gift)
     add_gift = Gift(
         name=gift['name'],
-        price_cents=gift['price']*100,
+        price=gift['price']*100,
         sku=0,
         user_id=user_id,
         description=gift['description'],

@@ -22,7 +22,7 @@ class TestGiftModel(TestCase):
 
         self.gift = self.user.gift_set.create(
             name = 'Book Book',
-            price_cents = '7024',
+            price = '7024',
             sku= '53434',
         )
 

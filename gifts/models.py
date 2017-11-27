@@ -10,7 +10,7 @@ from rest_framework import serializers
 class Gift(models.Model):
     """GIFT MODEL"""
     name = models.CharField(max_length=255)
-    price_cents = models.IntegerField()
+    price = models.IntegerField()
     sku = models.IntegerField(blank=True)
     description = models.TextField()
     photo = models.CharField(max_length=255)
@@ -23,13 +23,13 @@ class Gift(models.Model):
 class GiftForm(ModelForm):
     class Meta:
         model = Gift
-        fields = ['name', 'price_cents', 'sku']
+        fields = ['name', 'price', 'sku']
 
 
 class GiftSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gift
-        fields = ('id', 'name', 'price_cents', 'sku', 'description', 'photo')
+        fields = ('id', 'name', 'price', 'sku', 'description', 'photo')
 
 
 class Wishlist(models.Model):
