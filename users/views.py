@@ -60,3 +60,11 @@ def check_username(request):
         return Response(status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
+
+
+@api_view(['GET'])
+def search_name(request, name):
+    users = User.objects.filter(username__iexact=name)
+    serializer = UserSerializer(users, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
