@@ -47,3 +47,19 @@ def getUserWishlists(request, userId):
     wishlists = Wishlist.objects.all().filter(user_id=userId)
     serialized_wishlists = WishlistSerializer(wishlists, many=True)
     return Response(serialized_wishlists.data)
+
+@api_view(['POST'])
+def postSearchGiftToGifts(request, user_id):
+    """Method for POST /api/vX/users/X/gifts/add""" 
+    gift = json.loads(request.body)['gift']
+    print(gift)
+    add_gift = Gift(
+        name=gift['name'],
+        price_cents=gift['price']*100,
+        sku=0,
+        user_id=user_id,
+        description=gift['description'],
+        photo=gift['image']
+    )
+    add_gift.save()
+    return Response(status=status.HTTP_201_CREATED)
