@@ -14,9 +14,11 @@ class ProductInfo:
     ch = http.Http()
 
     @classmethod
-    def fetch_upc_info(cls):
+    def fetch_upc_info(cls, query):
+
+        upc = query['number']
         # hard code a upc for now
-        upc =  '062020005632'#--valid upc but no items-- #'4002293401102' #--valid upc with many items-- 
+        #upc =  '062020005632'#--valid upc but no items-- #'4002293401102' #--valid upc with many items-- 
         resp, content = cls.ch.request(
             f'https://api.upcitemdb.com/prod/trial/lookup?upc={upc}', 
             'GET',

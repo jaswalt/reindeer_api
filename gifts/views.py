@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from users.models import User
-from .models import GiftSerializer, Gift
+from .models import GiftSerializer, Gift, WishlistSerializer, Wishlist
 from .upc_api import ProductInfo
 
 # Create your views here.
@@ -41,3 +41,25 @@ def index(request):
 def search(request, query):
     gifts = ProductInfo.fetch_search_info(query)
     return Response(gifts)
+
+@api_view(['GET'])
+def getUserWishlists(request, userId):
+    wishlists = Wishlist.objects.all().filter(user_id=userId)
+    serialized_wishlists = WishlistSerializer(wishlists, many=True)
+    return Response(serialized_wishlists.data)
+
+@api_view(['POST'])
+def postSearchGiftToGifts(request, user_id):
+    """Method for POST /api/vX/users/X/gifts/add""" 
+    gift = json.loads(request.body)['gift']
+    print(gift)
+    add_gift = Gift(
+        name=gift['name'],
+        price=gift['price'],
+        sku=0,
+        user_id=user_id,
+        description=gift['description'],
+        photo=gift['image']
+    )
+    add_gift.save()
+    return Response(status=status.HTTP_201_CREATED)
