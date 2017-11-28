@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+
+import datetime
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,8 +28,13 @@ SECRET_KEY = 'a6!=$ks5!ul=54!)pe$-nnj!(46u0ud^k+6k(!r#5gj!_!$wm6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kaddo.co', 'reindeer-api.herokuapp.com',
-                 'localhost', '0.0.0.0', '127.0.0.1', '172.46.3.120', '192.168.0.16']
+ALLOWED_HOSTS = ['kaddo.co',
+                 'reindeer-api.herokuapp.com',
+                 'localhost',
+                 '0.0.0.0',
+                 '127.0.0.1',
+                 '172.46.3.120',
+                 '192.168.0.16']
 
 
 # Application definition
@@ -178,3 +185,17 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
+JWT_AUTH = {
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': False,
+    'JWT_LEEWAY': 0,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1800),
+
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+}
+
+
