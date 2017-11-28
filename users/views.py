@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_jwt.settings import api_settings
 from .models import User, UserSerializer
+from gifts.models import Wishlist
 
 
 # Create your views here.
@@ -60,3 +61,9 @@ def check_username(request):
         return Response(status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
+
+@api_view(['DELETE'])
+def deleteWishlist(request, user_id, wishlist_id):
+    """Method for DELETE /api/vX/users/X/wishlists/X"""
+    Wishlist.objects.all().filter(pk=wishlist_id, user_id=user_id).delete()
+    return Response(status=status.HTTP_202_ACCEPTED)
