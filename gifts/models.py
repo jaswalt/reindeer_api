@@ -14,6 +14,7 @@ class Gift(models.Model):
     sku = models.IntegerField(blank=True)
     description = models.TextField()
     photo = models.CharField(max_length=255)
+    held = models.ForeignKey(settings.AUTH_USER_MODEL)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -29,7 +30,16 @@ class GiftForm(ModelForm):
 class GiftSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gift
-        fields = ('id', 'name', 'price', 'sku', 'description', 'photo')
+        fields = (
+            'id',
+            'name',
+            'price',
+            'sku',
+            'description',
+            'photo',
+            'user',
+            'held'
+        )
 
 
 class Wishlist(models.Model):
