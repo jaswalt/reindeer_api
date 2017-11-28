@@ -70,3 +70,9 @@ def postSearchGiftToGifts(request, user_id):
     )
     add_gift.save()
     return Response(status=status.HTTP_201_CREATED)
+
+@api_view(['DELETE'])
+def deleteWishlistGift(request, userId, wishlistId, giftId):
+    """Method for DELETE /api/vX/users/X/gifts/wishlists/X/gifts/X"""
+    Wishlist.objects.get(pk=wishlistId).gifts.all().filter(pk=giftId).delete()
+    return Response(status=status.HTTP_202_ACCEPTED)
