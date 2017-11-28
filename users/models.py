@@ -12,6 +12,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.first_name
 
+
 class UserForm(ModelForm):
     class Meta:
         model = User
@@ -22,6 +23,18 @@ class UserForm(ModelForm):
             'email',
             'dob'
         ]
+
+
+class FriendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+        )
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -36,8 +49,8 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
             'friends',
         )
-        extra_kwargs = {'password': { 'write_only': True }}
-    
+        extra_kwargs = {'password': {'write_only': True}}
+
     def create(self, validated_data):
         user = User(
             username=validated_data['username'],
@@ -48,4 +61,3 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
-

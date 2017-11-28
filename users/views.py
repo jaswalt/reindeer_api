@@ -77,3 +77,11 @@ def befriend_user(request, userId, friendId):
     user.friends.add(friend)
     serializer = UserSerializer(friend)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def list_friends(request, userId):
+    users = User.objects.get(pk=userId).friends.all()
+    serializer = UserSerializer(users, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)

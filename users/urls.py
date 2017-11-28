@@ -1,5 +1,12 @@
 from django.conf.urls import url, include
-from .views import UsersView, UserView, check_username, search_name, befriend_user
+from .views import (
+    UsersView,
+    UserView,
+    check_username,
+    search_name,
+    befriend_user,
+    list_friends
+)
 
 urlpatterns = [
     url(r'^$', UsersView.as_view()),
@@ -7,5 +14,6 @@ urlpatterns = [
     url(r'^search/(\w+)$', search_name),
     url(r'^([0-9]+)$', UserView.as_view()),
     url(r'^([0-9]+)/befriend/([0-9]+)$', befriend_user),
+    url(r'^([0-9]+)/friends/$', list_friends),
     url(r'^([0-9]+)/gifts/', include('gifts.urls'))
 ]

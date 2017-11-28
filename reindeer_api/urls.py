@@ -20,8 +20,6 @@ from rest_framework_jwt.views import obtain_jwt_token
 from gifts import views as gifts
 
 
-
-
 urlpatterns = [
     url(r'^$', gifts.index),
     url(r'^api/v1/', include([
