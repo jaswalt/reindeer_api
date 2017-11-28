@@ -33,10 +33,23 @@ class GiftsView(APIView):
         return Response(status=status.HTTP_202_ACCEPTED)
 
 
-def index(request):
-    """GET /"""
-    # TODO: Change to actual index page when ready
-    return render(request, 'soon.html')
+class GiftHoldingsView(APIView):
+    """View to handle requests to /api/vX/users/X/gifts/X/hold"""
+
+    def patch(self, request, user_id, gift_id):
+        """Method for PATCH /api/vX/users/X/gifts/X/hold"""
+        gift = User.objects.get(pk=user_id).gift_set.get(pk=gift_id)
+        if gift.holder is None:
+            gift.holder = request.user
+            gift.save()
+            return Response(status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, user_id, gift_id):
+        """Method for DELETE /api/vX/users/X/gifts/X/hold"""
+        User.objects.get(pk=user_id).gift_set.get(pk=gift_id).delete()
+        return Response(status=status.HTTP_202_ACCEPTED)
 
 
 @api_view(['GET'])
@@ -53,7 +66,7 @@ def getUserWishlists(request, userId):
 
 
 @api_view(['GET'])
-def getWishlistGifts(request, userId, wishlistId ):
+def getWishlistGifts(request, userId, wishlistId):
     wishlist = Wishlist.objects.get(pk=wishlistId)
     gifts = wishlist.gifts.all()
     serialized_gifts = GiftSerializer(gifts, many=True)
@@ -75,3 +88,9 @@ def postSearchGiftToGifts(request, user_id):
     )
     add_gift.save()
     return Response(status=status.HTTP_201_CREATED)
+
+
+def index(request):
+    """GET /"""
+    # TODO: Change to actual index page when ready
+    return render(request, 'soon.html')
