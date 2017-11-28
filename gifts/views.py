@@ -44,12 +44,17 @@ class GiftHoldingsView(APIView):
             gift.save()
             return Response(status=status.HTTP_202_ACCEPTED)
         else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
     def delete(self, request, user_id, gift_id):
         """Method for DELETE /api/vX/users/X/gifts/X/hold"""
-        User.objects.get(pk=user_id).gift_set.get(pk=gift_id).delete()
-        return Response(status=status.HTTP_202_ACCEPTED)
+        gift = User.objects.get(pk=user_id).gift_set.get(pk=gift_id)
+        if gift.holder is not None:
+            gift.holder = None
+            gift.save()
+            return Response(status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 @api_view(['GET'])
