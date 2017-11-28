@@ -11,6 +11,7 @@ from users.models import User
 from .models import GiftSerializer, Gift, WishlistSerializer, Wishlist
 from .upc_api import ProductInfo
 
+
 # Create your views here.
 class GiftsView(APIView):
     """View to handle requests to /api/vX/users/X/gifts/"""
@@ -37,10 +38,12 @@ def index(request):
     # TODO: Change to actual index page when ready
     return render(request, 'soon.html')
 
+
 @api_view(['GET'])
 def search(request, query):
     gifts = ProductInfo.fetch_search_info(query)
     return Response(gifts)
+
 
 @api_view(['GET'])
 def getUserWishlists(request, userId):
@@ -48,16 +51,18 @@ def getUserWishlists(request, userId):
     serialized_wishlists = WishlistSerializer(wishlists, many=True)
     return Response(serialized_wishlists.data)
 
+
 @api_view(['GET'])
 def getWishlistGifts(request, userId, wishlistId ):
-    wishlist = Wishlist.objects.get(pk=wishlistId);
+    wishlist = Wishlist.objects.get(pk=wishlistId)
     gifts = wishlist.gifts.all()
     serialized_gifts = GiftSerializer(gifts, many=True)
     return Response(serialized_gifts.data)
 
+
 @api_view(['POST'])
 def postSearchGiftToGifts(request, user_id):
-    """Method for POST /api/vX/users/X/gifts/add""" 
+    """Method for POST /api/vX/users/X/gifts/add"""
     gift = json.loads(request.body)['gift']
     print(gift)
     add_gift = Gift(

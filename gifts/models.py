@@ -14,8 +14,16 @@ class Gift(models.Model):
     sku = models.IntegerField(blank=True)
     description = models.TextField()
     photo = models.CharField(max_length=255)
-    held = models.ForeignKey(settings.AUTH_USER_MODEL)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    holder = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='holds',
+        blank=True,
+        null=True
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.name
@@ -38,7 +46,7 @@ class GiftSerializer(serializers.ModelSerializer):
             'description',
             'photo',
             'user',
-            'held'
+            'holder'
         )
 
 
