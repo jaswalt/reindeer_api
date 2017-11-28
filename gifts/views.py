@@ -48,6 +48,13 @@ def getUserWishlists(request, userId):
     serialized_wishlists = WishlistSerializer(wishlists, many=True)
     return Response(serialized_wishlists.data)
 
+@api_view(['GET'])
+def getWishlistGifts(request, userId, wishlistId ):
+    wishlist = Wishlist.objects.get(pk=wishlistId);
+    gifts = wishlist.gifts.all()
+    serialized_gifts = GiftSerializer(gifts, many=True)
+    return Response(serialized_gifts.data)
+
 @api_view(['POST'])
 def postSearchGiftToGifts(request, user_id):
     """Method for POST /api/vX/users/X/gifts/add""" 
