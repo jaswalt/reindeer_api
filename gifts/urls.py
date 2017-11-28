@@ -3,7 +3,7 @@ from .views import GiftsView, search, getUserWishlists, getWishlistGifts, delete
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
-    url(r'^(\d+)?$', csrf_exempt(GiftsView.as_view())),
+    url(r'^(\d+)?$', GiftsView.as_view()),
     url(r'^(\d+)/hold/$', GiftHoldingsView.as_view()),
     url(r'^wishlists/(\d+)/gifts/(\d+)$', deleteWishlistGift),
     url(r'^wishlists/(\d+)$', getWishlistGifts),
