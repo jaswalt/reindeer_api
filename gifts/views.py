@@ -115,6 +115,14 @@ def postSearchGiftToGifts(request, user_id):
     add_gift.save()
     return Response(status=status.HTTP_201_CREATED)
 
+@api_view(['POST'])
+def addWishlistGift(request, userId, wishlistId):
+    """Method for POST /api/vX/users/X/gifts/wishlists/X/gifts/add"""
+    gift_id = json.loads(request.body)
+    gift = Gift.objects.get(pk=gift_id)
+    Wishlist.objects.get(pk=wishlistId).gifts.add(gift)
+    return Response(status=status.HTTP_201_CREATED)
+
 @api_view(['DELETE'])
 def deleteWishlistGift(request, userId, wishlistId, giftId):
     """Method for DELETE /api/vX/users/X/gifts/wishlists/X/gifts/X"""
