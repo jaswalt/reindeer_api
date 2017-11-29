@@ -56,7 +56,7 @@ class Wishlist(models.Model):
     """WISHLIST MODEL"""
     title = models.CharField(max_length=255)
     date = models.DateField()
-    image = models.CharField(max_length=255, blank=True, null=True)
+    image = models.CharField(max_length=255, blank=True)
     gifts = models.ManyToManyField(Gift)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
