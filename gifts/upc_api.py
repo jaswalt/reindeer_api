@@ -50,9 +50,8 @@ class ProductInfo:
 
             else:
                 #search another api
-                walmart_upc = '035000521019'
-                resp, content = cls.ch.request( 
-                    f"http://api.walmartlabs.com/v1/items?apiKey={os.environ.get('WALMART_API_KEY')}&upc={walmart_upc}",
+                resp, content = cls.ch.request(
+                    f"http://api.walmartlabs.com/v1/items?apiKey={os.environ.get('WALMART_API_KEY')}&upc={upc}",
                     'GET',
                     None,
                     cls.headers

@@ -12,8 +12,8 @@ import random
 class Gift(models.Model):
     """GIFT MODEL"""
     name = models.CharField(max_length=255)
-    price = models.IntegerField()
-    sku = models.IntegerField(blank=True)
+    price = models.DecimalField(max_digits=12,decimal_places=2)
+    sku = models.BigIntegerField(blank=True)
     description = models.TextField()
     photo = models.CharField(max_length=255)
     holder = models.ForeignKey(

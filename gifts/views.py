@@ -27,15 +27,13 @@ class GiftsView(APIView):
         body = json.loads(request.body)
         upc = body['number']
         gift = ProductInfo.fetch_upc_info(upc)
-        add_gift = Gift(
-            name = gift['name'],
-            price = gift['price'],
-            sku = upc,
-            user_id = user_id,
-            description = gift['description'],
-            photo = gift['photo']
+        request.user.gift_set.create(
+            name=gift['name'],
+            price=gift['price'],
+            sku=upc,
+            description=gift['description'],
+            photo=gift['image']
         )
-        add_gift.save()
         return Response(status=status.HTTP_201_CREATED)
 
     def delete(self, request, user_id, gift_id):
