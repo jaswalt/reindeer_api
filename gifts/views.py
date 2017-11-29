@@ -121,7 +121,9 @@ def addWishlistGift(request, userId, wishlistId):
     gift_id = json.loads(request.body)
     gift = Gift.objects.get(pk=gift_id)
     Wishlist.objects.get(pk=wishlistId).gifts.add(gift)
-    return Response(status=status.HTTP_201_CREATED)
+    serializer = GiftSerializer(gift)
+
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['DELETE'])
 def deleteWishlistGift(request, userId, wishlistId, giftId):
