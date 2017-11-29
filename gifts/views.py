@@ -24,7 +24,18 @@ class GiftsView(APIView):
 
     def post(self, request, user_id, gift_id):
         """Method for POST /api/vX/users/X/gifts/"""
-        print(json.loads(request.body))
+        body = json.loads(request.body)
+        upc = body['number']
+        gift = ProductInfo.fetch_upc_info(upc)
+        add_gift = Gift(
+            name = gift['name'],
+            price = gift['price'],
+            sku = upc,
+            user_id = user_id,
+            description = gift['description'],
+            photo = gift['photo']
+        )
+        add_gift.save()
         return Response(status=status.HTTP_201_CREATED)
 
     def delete(self, request, user_id, gift_id):
@@ -95,12 +106,12 @@ def postSearchGiftToGifts(request, user_id):
     gift = json.loads(request.body)['gift']
     print(gift)
     add_gift = Gift(
-        name=gift['name'],
-        price=gift['price'],
-        sku=0,
-        user_id=user_id,
-        description=gift['description'],
-        photo=gift['image']
+        name = gift['name'],
+        price = gift['price'],
+        sku = 0,
+        user_id = user_id,
+        description = gift['description'],
+        photo = gift['image']
     )
     add_gift.save()
     return Response(status=status.HTTP_201_CREATED)

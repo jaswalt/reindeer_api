@@ -14,9 +14,8 @@ class ProductInfo:
     ch = http.Http()
 
     @classmethod
-    def fetch_upc_info(cls, query):
+    def fetch_upc_info(cls, upc):
 
-        upc = query['number']
         # hard code a upc for now
         #upc =  '062020005632'#--valid upc but no items-- #'4002293401102' #--valid upc with many items-- 
         resp, content = cls.ch.request(
@@ -158,4 +157,3 @@ class ProductInfo:
             return data_resp
 
 #TO-DO: -Strip description tags in walmart search.
-#       -Receive barcode from react native
