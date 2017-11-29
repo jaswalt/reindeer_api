@@ -90,7 +90,8 @@ def createWishlist(request, userId):
         user_id=userId
     )
     add_wishlist.save()
-    return Response(status=status.HTTP_201_CREATED)
+    serializer = WishlistSerializer(add_wishlist)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def getWishlistGifts(request, userId, wishlistId):

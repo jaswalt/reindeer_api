@@ -64,7 +64,7 @@ class Wishlist(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if self.image is None:
+        if not self.image:
             pics = [
                 'http://s1.1zoom.me/big0/449/345838-admin.jpg',
                 'https://www.legarrick.co.uk/wp-content/uploads/2014/05/xmas-le-garrick-700x400.jpg',
