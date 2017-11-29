@@ -69,6 +69,18 @@ def getUserWishlists(request, userId):
     serialized_wishlists = WishlistSerializer(wishlists, many=True)
     return Response(serialized_wishlists.data)
 
+@api_view(['POST'])
+def createWishlist(request, userId):
+    """Method for POST /api/vX/users/X/gifts/wishlists/create"""
+    wishlist = json.loads(request.body)
+    print(wishlist)
+    add_wishlist = Wishlist(
+        title=wishlist['title'],
+        date=wishlist['date'],
+        user_id=userId
+    )
+    add_wishlist.save()
+    return Response(status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def getWishlistGifts(request, userId, wishlistId):
