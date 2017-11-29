@@ -73,7 +73,6 @@ def getUserWishlists(request, userId):
 def createWishlist(request, userId):
     """Method for POST /api/vX/users/X/gifts/wishlists/create"""
     wishlist = json.loads(request.body)
-    print(wishlist)
     add_wishlist = Wishlist(
         title=wishlist['title'],
         date=wishlist['date'],
